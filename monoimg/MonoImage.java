@@ -29,6 +29,10 @@ public class MonoImage {
 		}
 		monoArray = toMonoArray(image);
 	}
+	public MonoImage(byte[][] array) {
+		monoArray = array.clone();
+		image = new BufferedImage(array.length, array[0].length, BufferedImage.TYPE_4BYTE_ABGR);
+	}
 	private byte[][] toMonoArray(BufferedImage img) {
 		if(img == null) {
 			return null;

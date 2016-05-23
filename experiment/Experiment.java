@@ -1,5 +1,7 @@
 package experiment;
 
+import java.nio.ByteBuffer;
+
 import dictionary.Dictionary;
 import dictionary.MatrixForDic;
 import monoimg.MonoImage;
@@ -7,13 +9,12 @@ import monoimg.MonoImage;
 public class Experiment {
 	public static void main(String[] args) {
 		MonoImage img = new MonoImage("/C:/Users/kumo/Pictures/sample.png");
-		int dicSize = 32, sqSize = 9, sampleDim = 54;
+		int dicSize = 32, sqSize = 8, sampleDim = 128;
 		MatrixForDic samples = getRandomSamplesFromImg(img, sqSize, sampleDim);
 		Dictionary dic = new Dictionary(samples, dicSize);
-		MatrixForDic error =
-				MatrixForDic.difference(samples, MatrixForDic.product(dic, dic.getSparseMatrixCopy()));
-		System.out.println(maxAbsElement(error));
-		System.out.println("done");
+		System.out.println("making dictionary is done.");
+		
+		System.out.println("done.");
 	}
 
 	private static double[][] monoImgToArray(MonoImage img) {
@@ -100,6 +101,19 @@ public class Experiment {
 					if(maxAbs < abs) maxAbs = abs;
 				}
 			return maxAbs;
+		}
+	}
+	private static MonoImage arrayToMonoImg(double[][] array) {
+		if(array == null) {
+			return null;
+		} else if(array[0] == null) {
+			return null;
+		} else {
+			byte[][] monoArray = new byte[array.length][array[0].length];
+			for(int i = 0; i < monoArray.length; i++)
+				for(int j = 0; j < monoArray[0].length; j++)
+					monoArray[i][j] = ByteBuffer.allocate(4).putInt((int)array[i][j]).get(3);
+			return new MonoImage(monoArray);
 		}
 	}
 }
