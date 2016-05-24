@@ -8,7 +8,7 @@ import monoimg.MonoImage;
 
 public class Experiment {
 	public static void main(String[] args) {
-		MonoImage img = new MonoImage("/C:/Users/kumo/Pictures/sample.png");
+		MonoImage img = new MonoImage(args[0]);
 		int dicSize = 32, sqSize = 8, sampleDim = 128;
 		MatrixForDic samples = getRandomSamplesFromImg(img, sqSize, sampleDim);
 		Dictionary dic = new Dictionary(samples, dicSize);
